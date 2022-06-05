@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax Api</title>
+  </head>
+  <body></body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    // const ajax = new XMLHttpRequest();
+    // ajax.open('GET', 'https://www.omdbapi.com/?apikey=5d980e99&s=avengers');
+    // ajax.addEventListener('load', function () {
+    //   if (ajax.status === 200) {
+    //     const json = JSON.parse(ajax.responseText);
+    //     const movie = json.Search;
+    //     console.log(movie);
+    //   } else {
+    //     console.log(ajax.responseText);
+    //   }
+    // });
+    // ajax.send();
+
+    // const movies = fetch('https://www.omdbapi.com/?apikey=5d980e99&s=avengers')
+    //   .then((r) => r.json())
+    //   .then((r) => console.log(r));
+
+    function getMovies() {
+      return new Promise(function (y, n) {
+        const ajax = new XMLHttpRequest();
+        ajax.open('GET', 'https://www.omdbapi.com/?apikey=5d980e99&s=avengers');
+        ajax.onload = function () {
+          if (ajax.status === 200) {
+            y(JSON.parse(ajax.responseText));
+          } else {
+            n(ajax.responseText);
+          }
+        };
+        ajax.send();
+      });
+    }
+
+    getMovies()
+      .then((r) => console.log(r.Search))
+      .catch((e) => console.log(e))
+      .finally(console.log('finally'));
+  </script>
+</html>
